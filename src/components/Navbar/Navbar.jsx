@@ -1,9 +1,9 @@
-import React from 'react'
-import { app } from '../../Firebase/firebase'
+import React, { useState } from 'react';
+import { app } from '../../Firebase/firebase';
 import { getAuth } from 'firebase/auth';
 import { Link, Navigate } from 'react-router-dom';
-import { useState } from 'react';
 import { signOut } from 'firebase/auth';
+
 const auth = getAuth(app);
 
 function Navbar() {
@@ -11,111 +11,115 @@ function Navbar() {
 
    const handleLogout = async () => {
       try {
-         await signOut(auth); // Call Firebase signOut directly
+         await signOut(auth);
          localStorage.removeItem('isAuthenticated');
-         setIsLoggedOut(true); // Update state to trigger redirect
+         setIsLoggedOut(true);
       } catch (error) {
-         console.error("Logout failed:", error); // Handle error if needed
+         console.error("Logout failed:", error);
       }
    };
 
    if (isLoggedOut) {
-      return <Navigate to="/login" />; // Conditionally render Navigate for redirection
+      return <Navigate to="/login" />;
    }
+
    return (
-      <div  >
-         <nav class="navbar navbar-expand-lg bg-light  ">
-            <div class="container-fluid ">
-               <a class="navbar-brand " href="#">Quickunits</a>
-               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
+      <div>
+         <nav className="navbar navbar-expand-lg bg-light">
+            <div className="container-fluid">
+               <a className="navbar-brand" href="#">Quickunits</a>
+               <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span className="navbar-toggler-icon"></span>
                </button>
-               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ">
-                     <li class="nav-item ">
-                        <a class="nav-link active " aria-current="page" href="#">Home</a>
+               <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                     <li className="nav-item">
+                        <Link className="nav-link active" aria-current="page" to="/home">Home</Link>
                      </li>
 
-                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                     <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                            Length/Distance
                         </a>
-                        <ul class="dropdown-menu">
-                           <li><a class="dropdown-item" href="#">Meters (m) ↔️ Feet (ft)</a></li>
-                           <li><a class="dropdown-item" href="#">Kilometers (km) ↔️ Miles (mi)
-                           </a></li>
-                           <li><a class="dropdown-item" href="#">Centimeters (cm) ↔️ Inches (in)</a></li>
-                           <li><a class="dropdown-item" href="#">Millimeters (mm) ↔️ Inches (in)</a></li>
+                        <ul className="dropdown-menu">
+                           <li><Link className="dropdown-item" to="/MetersToFeetConversion">Meters (m) ↔️ Feet (ft)</Link></li>
+                           <li><Link className="dropdown-item" to="/KilometersToMilesConversion">Kilometers (km) ↔️ Miles (mi)</Link></li>
+                           <li><Link className="dropdown-item" to="/CentimetersToInchesConversion">Centimeters (cm) ↔️ Inches (in)</Link></li>
+                           <li><Link className="dropdown-item" to="/MillimetersToInchesConversion">Millimeters (mm) ↔️ Inches (in)</Link></li>
                         </ul>
                      </li>
-                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                     <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                            Length/Weight/Mass
                         </a>
-                        <ul class="dropdown-menu">
-                           <li><a class="dropdown-item" href="#">Kilograms (kg) ↔️ Pounds (lb)</a></li>
-                           <li><a class="dropdown-item" href="#">Grams (g) ↔️ Ounces (oz)</a></li>
-                           <li><a class="dropdown-item" href="#">Tons (metric) ↔️ Tons (imperial)</a></li>
+                        <ul className="dropdown-menu">
+                           <li><Link className="dropdown-item" to="/KilogramsToPoundsConversion">Kilograms (kg) ↔️ Pounds (lb)</Link></li>
+                           <li><Link className="dropdown-item" to="/GramsToOuncesConversion">Grams (g) ↔️ Ounces (oz)</Link></li>
+                           <li><Link className="dropdown-item" to="/MetricTonsToImperialTonsConversion">Tons (metric) ↔️ Tons (imperial)</Link></li>
                         </ul>
                      </li>
-                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                     <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                            Temperature
                         </a>
-                        <ul class="dropdown-menu">
-                           <li><a class="dropdown-item" href="#">Celsius (°C) ↔️ Fahrenheit (°F))</a></li>
-                           <li><a class="dropdown-item" href="#">Kelvin (K) ↔️ Celsius (°C)</a></li>
+                        <ul className="dropdown-menu">
+                           <li><Link className="dropdown-item" to="/CelsiusToFahrenheitConversion">Celsius (°C) ↔️ Fahrenheit (°F)</Link></li>
+                           <li><Link className="dropdown-item" to="/KelvinToCelsiusConversion">Kelvin (K) ↔️ Celsius (°C)</Link></li>
                         </ul>
                      </li>
-                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                     <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                            Volume
                         </a>
-                        <ul class="dropdown-menu">
-                           <li><a class="dropdown-item" href="#">Liters (L) ↔️ Gallons (gal)</a></li>
-                           <li><a class="dropdown-item" href="#">Milliliters (mL) ↔️ Fluid Ounces (fl oz)</a></li>
-                           <li><a class="dropdown-item" href="#">Cubic meters (m³) ↔️ Cubic feet (ft³)</a></li>
+                        <ul className="dropdown-menu">
+                           <li><Link className="dropdown-item" to="/LitersToGallonsConversion">Liters (L) ↔️ Gallons (gal)</Link></li>
+                           <li><Link className="dropdown-item" to="/MillilitersToFluidOuncesConversion">Milliliters (mL) ↔️ Fluid Ounces (fl oz)</Link></li>
+                           <li><Link className="dropdown-item" to="/CubicMetersToCubicFeetConversion">Cubic meters (m³) ↔️ Cubic feet (ft³)</Link></li>
                         </ul>
                      </li>
-                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                     <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                            Speed
                         </a>
-                        <ul class="dropdown-menu">
-                           <li><a class="dropdown-item" href="#">Kilometers per hour (km/h) ↔️ Miles per hour (mph)</a></li>
-                           <li><a class="dropdown-item" href="#">Meters per second (m/s) ↔️ Feet per second (ft/s)</a></li>
+                        <ul className="dropdown-menu">
+                           <li><Link className="dropdown-item" to="/KilometersPerHourToMilesPerHourConversion">Kilometers per hour (km/h) ↔️ Miles per hour (mph)</Link></li>
+                           <li><Link className="dropdown-item" to="/MetersPerSecondToFeetPerSecondConversion">Meters per second (m/s) ↔️ Feet per second (ft/s)</Link></li>
                         </ul>
                      </li>
-                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                     <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                            Area
                         </a>
-                        <ul class="dropdown-menu">
-                           <li><a class="dropdown-item" href="#">Square meters (m²) ↔️ Square feet (ft²)</a></li>
-                           <li><a class="dropdown-item" href="#">Acres ↔️ Hectares</a></li>
+                        <ul className="dropdown-menu">
+                           <li><Link className="dropdown-item" to="/SquareMetersToSquareFeetConversion">Square meters (m²) ↔️ Square feet (ft²)</Link></li>
+                           <li><Link className="dropdown-item" to="/AcresToHectaresConversion">Acres ↔️ Hectares</Link></li>
                         </ul>
                      </li>
-                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                     <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                            Energy
                         </a>
-                        <ul class="dropdown-menu">
-                           <li><a class="dropdown-item" href="#">Joules (J) ↔️ Calories (cal)</a></li>
-                           <li><a class="dropdown-item" href="#">Kilowatt-hours (kWh) ↔️ BTU (British Thermal Unit)</a></li>
+                        <ul className="dropdown-menu">
+                           <li><Link className="dropdown-item" to="/JoulesToCaloriesConversion">Joules (J) ↔️ Calories (cal)</Link></li>
+                           <li><Link className="dropdown-item" to="#">Kilowatt-hours (kWh) ↔️ BTU (British Thermal Unit)</Link></li>
                         </ul>
                      </li>
 
-
-                     <li className='nav-item '>
-                        <Link className='nav-link' onClick={handleLogout} >Sign out</Link>
+                     <li className="nav-item">
+                        <Link className="nav-link" onClick={handleLogout}>Sign out</Link>
                      </li>
                   </ul>
                </div>
             </div>
-
          </nav>
       </div>
-   )
+   );
 }
 
-export default Navbar
+export default Navbar;
