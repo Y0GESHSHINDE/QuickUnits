@@ -1,0 +1,9 @@
+#ok{
+   background-image: url("../../assets/background.jpg");
+   background-size: cover;
+   height: 100vh;
+}
+
+#cardBd{
+   background-color: rgba(255, 255, 255, 0.4);
+}
